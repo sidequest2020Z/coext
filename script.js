@@ -1,5 +1,5 @@
 // ── Data ──
-const opportunities = [
+const hardcodedOpportunities = [
   {
     id: 1,
     platform: 'gebizx',
@@ -7,7 +7,6 @@ const opportunities = [
     badgeText: 'GeBIZ X',
     ref: 'GBX-2026-04521',
     title: 'IT Infrastructure Modernisation Services',
-    description: 'Provision of IT infrastructure modernisation services including cloud migration, network upgrades, and cybersecurity…',
     agency: 'Government Technology Agency (GovTech)',
     closingDate: 'Closes 15 Apr 2026',
     category: 'Information Technology',
@@ -20,13 +19,56 @@ const opportunities = [
     badgeText: 'GeBIZ 2.0',
     ref: 'GB-2026-08745',
     title: 'Supply, installation, testing and commissioning of integrated audio-visual systems for Project Sandbox Classroom - Anglo-Chinese School (Primary)',
-    description: 'Integrated AV systems including installation, testing and commissioning services for classroom facilities.',
     agency: 'Ministry of Education - Schools',
     closingDate: 'Closes 24 Jun 2026, 01:00PM',
     category: 'AV Equipment, Photographic Equipment & Accessories',
     url: 'details.html?id=2'
   }
 ];
+
+let opportunities = [];
+
+async function fetchExternalOpportunities() {
+  try {
+    const response = await fetch('https://lem2wowzbg.execute-api.ap-southeast-1.amazonaws.com/default/co-ex-poc');
+    const data = await response.json();
+    console.log('API Response:', data);
+    
+    // Transform API data to match opportunities format
+    const apiOpportunities = data.result || [];
+    const transformedData = apiOpportunities.map((item, index) => {
+      // Format closing date from ISO timestamp
+      let formattedDate = 'Date not specified';
+      if (item['Closing Date']) {
+        const dateObj = new Date(item['Closing Date']);
+        formattedDate = dateObj.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric' 
+        });
+      }
+      
+      return {
+        id: 100 + index,
+        platform: 'api',
+        badgeClass: 'badge-api',
+        badgeText: 'External',
+        ref: `API-${100 + index}`,
+        title: item.Title || 'Untitled Opportunity',
+        agency: item.Agency || 'N/A',
+        closingDate: formattedDate,
+        category: item.Category || 'Uncategorized',
+        url: '#'
+      };
+    });
+    
+    // Combine hardcoded and API data
+    opportunities = [...hardcodedOpportunities, ...transformedData];
+  } catch (error) {
+    console.error('Error fetching opportunities:', error);
+    opportunities = hardcodedOpportunities;
+  }
+}
 
 // ── Render ──
 function createCardHTML(op) {
@@ -39,7 +81,6 @@ function createCardHTML(op) {
         <span class="card-ref">${op.ref}</span>
       </div>
       <div class="card-title">${op.title}</div>
-      <div class="card-desc">${op.description}</div>
       <div class="card-meta">
         <div class="meta-row">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -80,4 +121,7 @@ function renderCards() {
 }
 
 // ── Init ──
-document.addEventListener('DOMContentLoaded', renderCards);
+document.addEventListener('DOMContentLoaded', async () => {
+  await fetchExternalOpportunities();
+  renderCards();
+});
