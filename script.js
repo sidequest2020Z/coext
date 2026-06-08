@@ -3,33 +3,38 @@ const opportunities = [
   {
     id: 1,
     platform: 'gebizx',
+    badgeClass: 'badge-gebizx',
+    badgeText: 'GeBIZ X',
     ref: 'GBX-2026-04521',
     title: 'IT Infrastructure Modernisation Services',
     description: 'Provision of IT infrastructure modernisation services including cloud migration, network upgrades, and cybersecurity…',
     agency: 'Government Technology Agency (GovTech)',
-    budget: 'S$2,500,000 – S$5,000,000',
     closingDate: 'Closes 15 Apr 2026',
-    urgent: false
+    category: 'Information Technology',
+    url: 'details.html?id=1'
   },
-  
+  {
+    id: 2,
+    platform: 'gebiz2',
+    badgeClass: 'badge-gebiz2',
+    badgeText: 'GeBIZ 2.0',
+    ref: 'GB-2026-08745',
+    title: 'Supply, installation, testing and commissioning of integrated audio-visual systems for Project Sandbox Classroom - Anglo-Chinese School (Primary)',
+    description: 'Integrated AV systems including installation, testing and commissioning services for classroom facilities.',
+    agency: 'Ministry of Education - Schools',
+    closingDate: 'Closes 24 Jun 2026, 01:00PM',
+    category: 'AV Equipment, Photographic Equipment & Accessories',
+    url: 'details.html?id=2'
+  }
 ];
 
 // ── Render ──
 function createCardHTML(op) {
-  const platformBadge = op.platform === 'gebizx'
-    ? '<span class="badge badge-gebizx">GeBIZ X</span>'
-    : '<span class="badge badge-gebiz2">GeBIZ 2.0</span>';
-
-  const urgentBadge = op.urgent
-    ? '<span class="badge badge-urgent">⏱ Closing soon</span>'
-    : '';
-
   return `
     <div class="card">
       <div class="card-header">
         <div class="card-badges">
-          ${platformBadge}
-          ${urgentBadge}
+          <span class="badge ${op.badgeClass}">${op.badgeText}</span>
         </div>
         <span class="card-ref">${op.ref}</span>
       </div>
@@ -44,13 +49,6 @@ function createCardHTML(op) {
         </div>
         <div class="meta-row">
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <line x1="12" y1="1" x2="12" y2="23"/>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-          </svg>
-          ${op.budget}
-        </div>
-        <div class="meta-row">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <rect x="3" y="4" width="18" height="18" rx="2"/>
             <line x1="16" y1="2" x2="16" y2="6"/>
             <line x1="8" y1="2" x2="8" y2="6"/>
@@ -58,11 +56,15 @@ function createCardHTML(op) {
           </svg>
           ${op.closingDate}
         </div>
+        <div class="meta-row">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          ${op.category}
+        </div>
       </div>
       <div class="card-footer">
-        <button class="view-details-btn" onclick="viewDetails(${op.id})">
-          View Details <span>→</span>
-        </button>
+        <a href="${op.url}" class="view-details-btn">View Details <span>→</span></a>
       </div>
     </div>
   `;
@@ -70,14 +72,10 @@ function createCardHTML(op) {
 
 function renderCards() {
   const grid = document.getElementById('cardsGrid');
+  const count = document.querySelector('.results-count span');
   grid.innerHTML = opportunities.map(createCardHTML).join('');
-}
-
-// ── Actions ──
-function viewDetails(id) {
-  const op = opportunities.find(o => o.id === id);
-  if (op) {
-    alert(`Viewing details for: ${op.title}\nReference: ${op.ref}`);
+  if (count) {
+    count.textContent = opportunities.length;
   }
 }
 
