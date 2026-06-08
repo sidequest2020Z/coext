@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Opportunity Details | GeBIZ Portal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f6f8;
+      color: #1a1a2e;
+    }
+
+    .gov-banner {
+      background: #1a1a2e;
+      color: #fff;
+      font-size: 12px;
+      padding: 6px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gov-banner .lion-icon {
+      width: 18px;
+      height: 18px;
+      background: #c0392b;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .navbar {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      height: 64px;
+      gap: 32px;
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      background: #1a1a2e;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .brand-text .brand-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a1a2e;
+      line-height: 1.2;
+    }
+
+    .brand-text .brand-sub {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .navbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .nav-link {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #4b5563;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: background 0.15s;
+    }
+
+    .nav-link:hover {
+      background: #f3f4f6;
+      color: #1a1a2e;
+    }
+
+    .nav-link.active {
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: auto;
+    }
+
+    .login-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-btn-gebiz {
+      background: #f3f4f6;
+      color: #1a1a2e;
+      border: 1px solid #e5e7eb;
+    }
+
+    .login-btn-gebiz:hover {
+      background: #e5e7eb;
+    }
+
+    .login-btn-gebizx {
+      background: #1a1a2e;
+      color: #ffffff;
+      border: 1px solid #1a1a2e;
+    }
+
+    .login-btn-gebizx:hover {
+      background: #2a2a4a;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      padding: 32px 24px 40px;
+      color: #fff;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      font-size: 14px;
+      color: #cbd5e1;
+      max-width: 560px;
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0ea5e9;
+      text-decoration: none;
+      margin-bottom: 24px;
+      transition: color 0.15s;
+    }
+
+    .back-link:hover {
+      color: #0284c7;
+    }
+
+    .details-layout {
+      display: grid;
+      gap: 24px;
+    }
+
+    .details-main {
+      display: grid;
+      gap: 24px;
+    }
+
+    .overview-header {
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      padding-bottom: 0;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px 12px;
+      align-items: start;
+      padding: 14px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-row svg {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: #9ca3af;
+      margin-top: 3px;
+    }
+
+    .detail-label {
+      grid-column: 2;
+      grid-row: 1;
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .detail-value {
+      grid-column: 2;
+      grid-row: 2;
+      font-size: 14px;
+      color: #1a1a2e;
+      font-weight: 500;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-color: #d1d5db;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1.5px solid;
+    }
+
+    .badge-gebizx {
+      color: #0ea5e9;
+      border-color: #0ea5e9;
+      background: #f0f9ff;
+    }
+
+    .badge-gebiz2 {
+      color: #f97316;
+      border-color: #f97316;
+      background: #fff7ed;
+    }
+
+    .badge-unavailable {
+      color: #9ca3af;
+      border-color: #d1d5db;
+      background: #f8fafc;
+    }
+
+    .badge-selected {
+      color: #0f766e;
+      border-color: #2dd4bf;
+      background: #ecfeff;
+    }
+
+    .card-ref {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a2e;
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+
+    .card-desc,
+    .detail-text {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .detail-row {
+      display: grid;
+      gap: 6px;
+    }
+
+    .detail-label {
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .detail-value {
+      font-size: 14px;
+      color: #1a1a2e;
+      font-weight: 600;
+    }
+
+    .requirements-card .card-title {
+      margin-bottom: 12px;
+    }
+
+    .requirements-card .card-desc {
+      color: #9ca3af;
+      font-style: italic;
+    }
+
+    .empty-state {
+      border: 1px dashed #d1d5db;
+      border-radius: 10px;
+      padding: 24px;
+      color: #6b7280;
+      text-align: center;
+      font-size: 14px;
+      background: #f8fafc;
+    }
+
+    .respond-btn {
+      width: fit-content;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: none;
+      background: #0ea5e9;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      align-self: flex-start;
+      box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);
+    }
+
+    .respond-btn:hover {
+      background: #0284c7;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(14, 165, 233, 0.3);
+    }
+
+    .respond-btn:active {
+      transform: translateY(0);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a2e;
+      text-decoration: none;
+    }
+
+    @media (max-width: 1024px) {
+      .details-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gov-banner">
+    <span class="lion-icon">🦁</span>
+    A Singapore Government Agency Website
+  </div>
+
+  <nav class="navbar">
+    <a class="navbar-brand" href="index.html">
+      <div class="brand-logo">GB</div>
+      <div class="brand-text">
+        <div class="brand-name">GeBIZ Portal</div>
+        <div class="brand-sub">Government Electronic Business</div>
+      </div>
+    </a>
+
+    <div class="navbar-nav">
+      <a class="nav-link active" href="index.html">Opportunities</a>
+      <a class="nav-link" href="#">Help</a>
+    </div>
+
+    <div class="navbar-actions">
+      <a href="https://www.gebiz.gov.sg/" target="_blank" class="login-btn login-btn-gebiz">
+        Login to GeBIZ
+      </a>
+      <a href="https://envsg01.ivalua.app/buyer/mofsingapore/rctmaint2/z8ueq/page.aspx/en/usr/login" target="_blank" class="login-btn login-btn-gebizx">
+        Login to GeBIZ X
+      </a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <a href="index.html" class="back-link">← Back to Opportunities</a>
+
+    <div class="details-layout">
+      <div class="details-main">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-badges">
+              <span id="detail-badge" class="badge badge-gebizx">GeBIZ X</span>
+            </div>
+            <span id="detail-ref" class="card-ref">GBX-2026-04521</span>
+          </div>
+          <div id="detail-title" class="card-title">Opportunity Title</div>
+          <div id="detail-desc" class="card-desc">Description of the opportunity will appear here.</div>
+          <div class="overview-header">Overview</div>
+          <div class="detail-list">
+            <div class="detail-row">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg>
+              <span class="detail-label">Agency</span>
+              <span id="detail-agency" class="detail-value">Government Technology Agency (GovTech)</span>
+            </div>
+            <div class="detail-row">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="detail-label">Closing Date</span>
+              <span id="detail-date" class="detail-value">Wednesday, 15 April 2026</span>
+            </div>
+            <div class="detail-row">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+              <span class="detail-label">Category</span>
+              <span id="detail-category" class="detail-value">Information Technology</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card requirements-card">
+          <div class="card-title">Requirements</div>
+          <div class="card-desc">Requirements content will be added here.</div>
+        </div>
+
+        <button class="respond-btn">Respond</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const opportunities = {
+      '1': {
+        platform: 'gebix',
+        badgeClass: 'badge-gebizx',
+        badgeText: 'GeBIZ X',
+        ref: 'GBX-2026-04521',
+        title: 'IT Infrastructure Modernisation Services',
+        description: 'Provision of IT infrastructure modernisation services including cloud migration, network upgrades, and cybersecurity…',
+        agency: 'Government Technology Agency (GovTech)',
+        closingDate: 'Wednesday, 15 April 2026',
+        category: 'Information Technology'
+      },
+      '2': {
+        platform: 'gebiz2',
+        badgeClass: 'badge-gebiz2',
+        badgeText: 'GeBIZ 2.0',
+        ref: 'GB-2026-08745',
+        title: 'Supply, installation, testing and commissioning of integrated audio-visual systems for Project Sandbox Classroom - Anglo-Chinese School (Primary)',
+        description: 'Integrated AV systems including installation, testing and commissioning services for classroom facilities.',
+        agency: 'Ministry of Education - Schools',
+        closingDate: 'Monday, 24 June 2026, 01:00 PM',
+        category: 'AV Equipment, Photographic Equipment & Accessories'
+      }
+    };
+
+    function renderOpportunity() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const op = opportunities[id];
+      if (!op) {
+        const container = document.querySelector('.details-main');
+        container.innerHTML = '<div class="card"><div class="card-title">Opportunity not found</div><div class="card-desc">Please return to the opportunities page and select a valid opportunity.</div></div>';
+        return;
+      }
+
+      document.title = `${op.title} | GeBIZ Portal`;
+
+      const badge = document.getElementById('detail-badge');
+      badge.textContent = op.badgeText;
+      badge.className = `badge ${op.badgeClass}`;
+
+      document.getElementById('detail-ref').textContent = op.ref;
+      document.getElementById('detail-title').textContent = op.title;
+      document.getElementById('detail-desc').textContent = op.description;
+      document.getElementById('detail-agency').textContent = op.agency;
+      document.getElementById('detail-date').textContent = op.closingDate;
+      document.getElementById('detail-category').textContent = op.category;
+    }
+
+    document.addEventListener('DOMContentLoaded', renderOpportunity);
+  </script>
+</body>
+</html>
