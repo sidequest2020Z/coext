@@ -215,18 +215,18 @@
     .main {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 28px 24px;
+      padding: 32px 24px;
     }
 
     /* ── Results Count ── */
     .results-count {
-      font-size: 14px;
+      font-size: 13px;
       color: #6b7280;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .results-count span {
-      font-weight: 600;
+      font-weight: 700;
       color: #1a1a2e;
     }
 
@@ -241,15 +241,16 @@
       background: #fff;
       border-radius: 12px;
       border: 1px solid #e5e7eb;
-      padding: 20px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       transition: box-shadow 0.2s, border-color 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     .card:hover {
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       border-color: #d1d5db;
     }
 
@@ -279,6 +280,12 @@
       background: #f0f9ff;
     }
 
+    .badge-gebiz2 {
+      color: #f97316;
+      border-color: #f97316;
+      background: #fff7ed;
+    }
+
     .card-ref {
       font-size: 11px;
       color: #9ca3af;
@@ -304,7 +311,8 @@
     .card-meta {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
+      margin-top: 4px;
     }
 
     .meta-row {
@@ -322,26 +330,32 @@
 
     .card-footer {
       border-top: 1px solid #f3f4f6;
-      padding-top: 12px;
+      padding-top: 16px;
       margin-top: auto;
     }
 
     .view-details-btn {
       background: none;
       border: none;
-      color: #3b82f6;
+      color: #0ea5e9;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 6px;
       padding: 0;
-      transition: gap 0.15s;
+      transition: all 0.2s;
+      text-decoration: none;
     }
 
     .view-details-btn:hover {
+      color: #0284c7;
       gap: 10px;
+    }
+
+    .view-details-btn:active {
+      transform: translateY(1px);
     }
 
     /* ── Responsive ── */
@@ -433,39 +447,11 @@
 
   <main class="main">
 
-    <p class="results-count">Showing <span>1</span> opportunity</p>
+    <p class="results-count">Showing <span>2</span> opportunities</p>
 
-    <div class="cards-grid" id="cardsGrid">
-
-      <div class="card">
-        <div class="card-header">
-          <div class="card-badges">
-            <span class="badge badge-gebizx">GeBIZ X</span>
-          </div>
-          <span class="card-ref">GBX-2026-04521</span>
-        </div>
-        <div class="card-title">IT Infrastructure Modernisation Services</div>
-        <div class="card-desc">Provision of IT infrastructure modernisation services including cloud migration, network upgrades, and cybersecurity…</div>
-        <div class="card-meta">
-          <div class="meta-row">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/></svg>
-            Government Technology Agency (GovTech)
-          </div>
-          <div class="meta-row">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            S$2,500,000 – S$5,000,000
-          </div>
-          <div class="meta-row">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Closes 15 Apr 2026
-          </div>
-        </div>
-        <div class="card-footer">
-          <button class="view-details-btn">View Details <span>→</span></button>
-        </div>
-      </div>
-
-    </div>
+    <div class="cards-grid" id="cardsGrid"></div>
   </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
