@@ -211,6 +211,42 @@
       color: #9ca3af;
     }
 
+    /* ── Filter Bar ── */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    .filter-btn.active {
+      color: #fff;
+      border-color: #fff;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .filter-btn.filter-gebizx.active  { color: #38bdf8; border-color: #38bdf8; background: rgba(56,189,248,0.15); }
+    .filter-btn.filter-gebiz2.active  { color: #fb923c; border-color: #fb923c; background: rgba(251,146,60,0.15); }
+    .filter-btn.filter-api.active     { color: #34d399; border-color: #34d399; background: rgba(52,211,153,0.15); }
+
     /* ── Main Content ── */
     .main {
       max-width: 1200px;
@@ -448,12 +484,18 @@
         </svg>
         <input type="text" placeholder="Search by title, agency, or reference number..." />
       </div>
+      <div class="filter-bar">
+        <button class="filter-btn filter-all active" data-filter="all">All</button>
+        <button class="filter-btn filter-gebizx" data-filter="gebizx">GeBIZ X</button>
+        <button class="filter-btn filter-gebiz2" data-filter="gebiz2">GeBIZ 2.0</button>
+        <button class="filter-btn filter-api" data-filter="api">Phase 1.5</button>
+      </div>
     </div>
   </section>
 
   <main class="main">
 
-    <p class="results-count">Showing <span>2</span> opportunities</p>
+    <p class="results-count" id="results-count">Showing opportunities</p>
 
     <div class="cards-grid" id="cardsGrid"></div>
   </main>
