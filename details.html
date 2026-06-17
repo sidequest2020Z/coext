@@ -315,6 +315,12 @@
       background: #fff7ed;
     }
 
+    .badge-api {
+      color: #10b981;
+      border-color: #10b981;
+      background: #ecfdf5;
+    }
+
     .badge-unavailable {
       color: #9ca3af;
       border-color: #d1d5db;
@@ -538,7 +544,13 @@
     function renderOpportunity() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
-      const op = opportunities[id];
+      let op = opportunities[id];
+
+      if (!op) {
+        const apiOps = JSON.parse(sessionStorage.getItem('apiOpportunities') || '[]');
+        op = apiOps.find(o => String(o.id) === id) || null;
+      }
+
       if (!op) {
         const container = document.querySelector('.details-main');
         container.innerHTML = '<div class="card"><div class="card-title">Opportunity not found</div><div class="card-desc">Please return to the opportunities page and select a valid opportunity.</div></div>';
