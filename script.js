@@ -27,6 +27,7 @@ const hardcodedOpportunities = [
 ];
 
 let opportunities = [];
+let activeFilter = 'all';
 
 async function fetchExternalOpportunities() {
   try {
@@ -48,22 +49,24 @@ async function fetchExternalOpportunities() {
         });
       }
       
+      const id = 100 + index;
       return {
-        id: 100 + index,
+        id,
         platform: 'api',
         badgeClass: 'badge-api',
-        badgeText: 'External',
-        ref: `API-${100 + index}`,
+        badgeText: 'Phase 1.5',
+        ref: `API-${id}`,
         title: item.Title || 'Untitled Opportunity',
         agency: item.Agency || 'N/A',
         closingDate: formattedDate,
         category: item.Category || 'Uncategorized',
-        url: '#'
+        url: `details.html?id=${id}`
       };
     });
     
     // Combine hardcoded and API data
     opportunities = [...hardcodedOpportunities, ...transformedData];
+    sessionStorage.setItem('apiOpportunities', JSON.stringify(transformedData));
   } catch (error) {
     console.error('Error fetching opportunities:', error);
     opportunities = hardcodedOpportunities;
@@ -112,11 +115,16 @@ function createCardHTML(op) {
 }
 
 function renderCards() {
+  const filtered = activeFilter === 'all'
+    ? opportunities
+    : opportunities.filter(op => op.platform === activeFilter);
+
   const grid = document.getElementById('cardsGrid');
-  const count = document.querySelector('.results-count span');
-  grid.innerHTML = opportunities.map(createCardHTML).join('');
+  grid.innerHTML = filtered.map(createCardHTML).join('');
+
+  const count = document.getElementById('results-count');
   if (count) {
-    count.textContent = opportunities.length;
+    count.innerHTML = `Showing <span>${filtered.length}</span> opportunities`;
   }
 }
 
@@ -124,4 +132,13 @@ function renderCards() {
 document.addEventListener('DOMContentLoaded', async () => {
   await fetchExternalOpportunities();
   renderCards();
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeFilter = btn.dataset.filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCards();
+    });
+  });
 });
